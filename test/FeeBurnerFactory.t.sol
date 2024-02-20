@@ -25,15 +25,16 @@ contract FeeBurnerTest is Test {
 
     /// @dev Simple test. Run Forge with `-vvvv` to see stack traces.
     function test() external {
-        address expectedAddress = factory.computeDeploymentAddress(prizePool, burnToken, liquidationPair);
+        address expectedAddress = factory.computeDeploymentAddress(prizePool, burnToken, address(this));
         FeeBurner burner = factory.deployFeeBurner(
             prizePool,
             burnToken,
-            liquidationPair
+            address(this)
         );
         assertEq(address(burner), expectedAddress, "address was computed correctly");
         assertEq(burner.burnToken(), burnToken, "burn token");
         assertEq(address(burner.prizePool()), address(prizePool), "prize pool");
-        assertEq(burner.liquidationPair(), liquidationPair, "liquidation pair");
+        assertEq(burner.creator(), address(this), "creator");
+        assertEq(burner.liquidationPair(), address(0), "liquidation pair");
     }
 }

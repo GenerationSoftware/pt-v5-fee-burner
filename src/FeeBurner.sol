@@ -10,13 +10,19 @@ contract FeeBurner is ILiquidationSource {
 
     PrizePool public immutable prizePool;
     address public immutable burnToken;
-    address public immutable liquidationPair;
+    address public immutable creator;    
+    address public liquidationPair;
     
-    constructor(PrizePool _prizePool, address _burnToken, address _liquidationPair) {
+    constructor(PrizePool _prizePool, address _burnToken, address _creator) {
         prizePool = _prizePool;
-        liquidationPair = _liquidationPair;
         burnToken = _burnToken;
+        creator = _creator;
+    }
 
+    function setLiquidationPair(address _liquidationPair) external {
+        require(liquidationPair == address(0), "FeeBurner: Liquidation pair already set");
+        require(msg.sender == creator, "FeeBurner: Only creator can set liquidation pair");
+        liquidationPair = _liquidationPair;
         emit LiquidationPairSet(address(prizePool.prizeToken()), _liquidationPair);
     }
 

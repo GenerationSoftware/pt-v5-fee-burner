@@ -44,14 +44,14 @@ contract FeeBurnerFactory {
     function deployFeeBurner(
         PrizePool _prizePool,
         address _burnToken,
-        address _liquidationPair
+        address _creator
     ) external returns (FeeBurner) {
         FeeBurner _feeBurner = new FeeBurner{
             salt: keccak256(abi.encode(msg.sender, deployerNonces[msg.sender]++))
         }(
             _prizePool,
             _burnToken,
-            _liquidationPair
+            _creator
         );
 
         allFeeBurners.push(_feeBurner);
@@ -68,7 +68,7 @@ contract FeeBurnerFactory {
     function computeDeploymentAddress(
         PrizePool _prizePool,
         address _burnToken,
-        address _liquidationPair
+        address _creator
     ) external view returns (address) {
         return address(uint160(uint(keccak256(abi.encodePacked(
             bytes1(0xff),
@@ -76,7 +76,7 @@ contract FeeBurnerFactory {
             keccak256(abi.encode(msg.sender, deployerNonces[msg.sender])),
             keccak256(abi.encodePacked(
                 type(FeeBurner).creationCode,
-                abi.encode(_prizePool, _burnToken, _liquidationPair)
+                abi.encode(_prizePool, _burnToken, _creator)
             ))
         )))));
     }
