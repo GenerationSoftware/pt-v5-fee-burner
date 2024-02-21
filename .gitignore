@@ -12,3 +12,6 @@ out/
 .envrc
 lcov.info
 node_modules
+
+.env
+.history
