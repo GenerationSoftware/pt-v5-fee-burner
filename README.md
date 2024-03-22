@@ -1,16 +1,6 @@
-# Foundry template
+# PoolTogether V5 Reward Burner
 
-Template to kickstart a Foundry project.
-
-## Getting started
-
-The easiest way to get started is by clicking the [Use this template](https://github.com/GenerationSoftware/foundry-template/generate) button at the top right of this page.
-
-If you prefer to go the CLI way:
-
-```
-forge init my-project --template https://github.com/GenerationSoftware/foundry-template
-```
+This contract is a liquidation source that exposes any accrued rewards from a Prize Pool. Liquidations are sent to the "dead" address.
 
 ## Development
 
